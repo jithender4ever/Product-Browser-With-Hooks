@@ -20,6 +20,7 @@ class ProductBrowser extends React.Component {
             this.setState({
                 products: [...this.state.products, response.data]
             })
+            this.collapsible.closeCollapsible()
             return response
         }
         catch(error) {
@@ -53,11 +54,13 @@ class ProductBrowser extends React.Component {
         return (
             <section>
                 <h1>Product Browser</h1>
-                <Collapsible trigger={"Add Item"}>
-                    <NewProductForm addProduct={this.addProduct.bind(this)}/>
-                </Collapsible>
-                
+                <div style={{ maxWidth: "600px", textAlign: "center", margin: "10px auto" }}>
+                    <Collapsible ref={ ref => this.collapsible=ref } trigger={"Add Item"}>
+                        <NewProductForm addProduct={this.addProduct.bind(this)}/>
+                    </Collapsible>
+                </div>
                 <ProductList products={this.state.products} removeProduct={this.removeProduct.bind(this)}/>
+                    
             </section>
         )
     }

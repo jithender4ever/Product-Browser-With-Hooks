@@ -39,7 +39,7 @@ const NewProductForm = props => {
                 />
                 <TextInput
                     id="description"
-                    type="text"
+                    type="textarea"
                     label="Description"
                     error={touched.description && errors.description}
                     value={values.description}
