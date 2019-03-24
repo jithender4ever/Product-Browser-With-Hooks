@@ -7,23 +7,21 @@ import NewProductForm from './NewProductForm'
 import ProductList from './ProductList'
 
 class ProductBrowser extends React.Component {
-
     apiUrl = 'http://localhost:4000/products'
 
     state = {
-        products: []
+        products: [],
     }
 
     async addProduct(product) {
         try {
             const response = await axios.post(this.apiUrl, product)
             this.setState({
-                products: [...this.state.products, response.data]
+                products: [...this.state.products, response.data],
             })
             this.collapsible.closeCollapsible()
             return response
-        }
-        catch(error) {
+        } catch (error) {
             toastr.error(error)
         }
     }
@@ -32,35 +30,36 @@ class ProductBrowser extends React.Component {
         try {
             const response = await axios.delete(`${this.apiUrl}/${id}`)
             this.setState({
-                products: this.state.products.filter( product => product.id !== id )
+                products: this.state.products.filter(product => product.id !== id),
             })
             return response
-        }
-        catch(error) {
+        } catch (error) {
             toastr.error(error)
         }
     }
 
     componentDidMount() {
-        axios.get(this.apiUrl).then((res) => {
-            this.setState({products: res.data})
-        }).catch(function (error) {
-            console.log(error)
-            toastr.error(error)
-        })
+        axios
+            .get(this.apiUrl)
+            .then(res => {
+                this.setState({ products: res.data })
+            })
+            .catch(function(error) {
+                console.log(error)
+                toastr.error(error)
+            })
     }
 
     render() {
         return (
             <section>
                 <h1>Product Browser</h1>
-                <div style={{ maxWidth: "600px", textAlign: "center", margin: "10px auto" }}>
-                    <Collapsible ref={ ref => this.collapsible=ref } trigger={"Add Item"}>
-                        <NewProductForm addProduct={this.addProduct.bind(this)}/>
+                <div style={{ maxWidth: '600px', textAlign: 'center', margin: '10px auto' }}>
+                    <Collapsible ref={ref => (this.collapsible = ref)} trigger={'Add Item'}>
+                        <NewProductForm addProduct={this.addProduct.bind(this)} />
                     </Collapsible>
                 </div>
-                <ProductList products={this.state.products} removeProduct={this.removeProduct.bind(this)}/>
-                    
+                <ProductList products={this.state.products} removeProduct={this.removeProduct.bind(this)} />
             </section>
         )
     }

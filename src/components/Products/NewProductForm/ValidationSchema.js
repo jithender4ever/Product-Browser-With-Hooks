@@ -1,4 +1,6 @@
-import { withFormik } from 'formik'
+import {
+    withFormik
+} from 'formik'
 import * as Yup from 'yup'
 
 const formikEnhancer = withFormik({
@@ -15,7 +17,10 @@ const formikEnhancer = withFormik({
             .required('A price is required'),
         rating: Yup.number()
             .min(0, 'Too small')
-            .max(5, schema => { console.log(schema); return `Too big, the max rating is ${schema.max}` })
+            .max(5, schema => {
+                console.log(schema);
+                return `Too big, the max rating is ${schema.max}`
+            })
     }),
     mapPropsToValues: () => ({
         name: '',
@@ -24,7 +29,11 @@ const formikEnhancer = withFormik({
         price: 0,
         rating: 0
     }),
-    handleSubmit: (product, { props, setSubmitting, resetForm }) => {
+    handleSubmit: (product, {
+        props,
+        setSubmitting,
+        resetForm
+    }) => {
         props.addProduct(product)
         setSubmitting(false)
         resetForm()
