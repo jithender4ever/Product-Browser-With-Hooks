@@ -7,7 +7,7 @@ function formatPrice(price) {
     return `$${dollars}.${cents}`
 }
 
-const Product = ({product, remove }) => {
+const Product = ({ product, remove }) => {
     const {name, brand, price, description, quantity, rating} = product
     return (
         <div className={styles.product}>
