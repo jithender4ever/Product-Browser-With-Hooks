@@ -3,13 +3,20 @@ import Product from './Product'
 import styles from './Products.module.css'
 
 const ProductList = ({products, removeProduct}) => {
-    const productsJsx = products.map(product => (
+    const productList = products.map(product => (
         <Product key={product.id} product={product} remove={removeProduct} />
     ))
+
+    const productListOrNoDataMessage = productList.length > 0 ? (
+        <ul className={styles['product-list']}>
+            {productList}
+        </ul>
+    ) : <p>No data to display</p>
+
     return (
         <section>
-            <div className={styles['product-list']}>                
-                {productsJsx}
+            <div>                
+                {productListOrNoDataMessage}
             </div>
         </section>
     )

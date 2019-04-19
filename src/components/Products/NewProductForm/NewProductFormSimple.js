@@ -1,6 +1,11 @@
 import React from "react"
 
-class NewProductFormOld extends React.Component {
+/**
+ * This is the old implementation of the Form.
+ * It is simple but doesn't have all the form validation.
+ * This code is not in use but I left it here for refrerence.
+ */
+class NewProductFormSimple extends React.Component {
 
     state = {
         newProduct: {
@@ -64,4 +69,4 @@ class NewProductFormOld extends React.Component {
     }
 }
 
-export default NewProductFormOld
+export default NewProductFormSimple

@@ -38,22 +38,20 @@ class ProductBrowser extends React.Component {
         }
     }
 
-    componentDidMount() {
-        axios
-            .get(this.apiUrl)
-            .then(res => {
-                this.setState({ products: res.data })
-            })
-            .catch(function(error) {
-                console.log(error)
-                toastr.error(error)
-            })
+    async componentDidMount() {
+        try {
+            const response = await axios.get(this.apiUrl)
+            this.setState({ products: response.data })
+        } catch (error) {
+            console.log(error)
+            toastr.error(error)
+        }
     }
 
     render() {
         return (
             <section>
-                <h1>Product Browser</h1>
+                <h1>Products</h1>
                 <div style={{ maxWidth: '600px', textAlign: 'center', margin: '10px auto' }}>
                     <Collapsible ref={ref => (this.collapsible = ref)} trigger={'Add Item'}>
                         <NewProductForm addProduct={this.addProduct.bind(this)} />
