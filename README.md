@@ -8,6 +8,3 @@ This is a React application demonstrating both stateful and stateless React comp
 
 This app uses `axios` to make RESTful calls to a server. A simple `json-server` is provided. To start the server run `yarn server`.
 
-## Live Demo
-
-A live demo is running [here](https://pages.github.homedepot.com/om-labs/React-Product-Browser/).
