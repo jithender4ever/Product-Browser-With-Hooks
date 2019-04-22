@@ -8,9 +8,9 @@ const ProductList = ({products, removeProduct}) => {
     ))
 
     const productListOrNoDataMessage = productList.length > 0 ? (
-        <ul className={styles['product-list']}>
+        <div className={styles['product-list']}>
             {productList}
-        </ul>
+        </div>
     ) : <p>No data to display</p>
 
     return (

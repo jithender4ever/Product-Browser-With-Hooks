@@ -4,6 +4,7 @@ import { render, cleanup, waitForElement, prettyDOM, getByText as domGetByText }
 import mockAxios from 'axios'
 import ProductBrowser from './ProductBrowser'
 import formatPrice from './format-price.js'
+import styles from './Products.module.css'
 
 const scheduler = typeof setImmedate === 'function' ? setImmediate : setTimeout
 function flushEventQueue(millis = 0) {
@@ -75,9 +76,9 @@ describe('Product Browser App', () => {
         await waitForElement(() => getByText('No data to display'))
     })
     it('renders 3 products with header, description, and price', async () => {
-        const { getByText } = render(<ProductBrowser />)
+        const { container, getByText } = render(<ProductBrowser />)
         await waitForElement(() => getByText('16 oz. Fiberglass Handle Hammer'))
-        const productList = document.querySelector('ul')
+        const productList = container.querySelector(`.${styles['product-list']}`)
         expect(productList.childElementCount).toEqual(3)
         mockData.forEach(product => {
             const productElementHeader = getByText(product.name)
