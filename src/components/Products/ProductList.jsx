@@ -1,6 +1,6 @@
 import React from 'react'
 import Product from './Product'
-import styles from './Products.module.css'
+import styles from './ProductList.module.css'
 
 const ProductList = ({products, removeProduct}) => {
     const productList = products.map(product => (

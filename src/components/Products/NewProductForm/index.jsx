@@ -2,7 +2,7 @@ import React from "react"
 import classnames from 'classnames'
 import formikEnhancer from './ValidationSchema'
 import TextInput from './TextInput'
-import styles from '../Products.module.css'
+import styles from './NewProductForm.module.css'
 
 const NewProductForm = props => {
     const {
@@ -66,7 +66,7 @@ const NewProductForm = props => {
                 />
                 <div className={styles.buttons}>
                     <button
-                        className={classnames(styles.outline, styles["form-button"])}
+                        className={classnames(styles["form-button"], styles["secondary-button"])}
                         type="button"
                         onClick={handleReset}
                         disabled={!dirty || isSubmitting}
@@ -74,7 +74,7 @@ const NewProductForm = props => {
                         Reset
                     </button>
                     <button
-                        className={styles["form-button"]}
+                        className={classnames(styles["form-button"], styles["primary-button"])}
                         type="submit"
                         disabled={isSubmitting}>
                             Submit

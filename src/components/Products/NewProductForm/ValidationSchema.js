@@ -16,7 +16,7 @@ const formikEnhancer = withFormik({
             .max(99999, 'Too big')
             .required('A price is required'),
         rating: Yup.number()
-            .min(0, 'Too small')
+            .min(1, 'Too small')
             .max(5, schema => {
                 console.log(schema);
                 return `Too big, the max rating is ${schema.max}`

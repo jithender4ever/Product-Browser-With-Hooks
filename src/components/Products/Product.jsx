@@ -1,12 +1,12 @@
 import React from 'react'
-import styles from './Products.module.css'
+import styles from './Product.module.css'
 import formatPrice from './format-price.js'
 
 const Product = ({ product, remove }) => {
     const {name, brand, price, description, quantity, rating} = product
     return (
         <div className={styles.product}>
-            <h3 className={styles.title}>{name}
+            <h3 className={styles['product-title']}>{name}
                 <button className={styles['delete-button']} onClick={() => remove(product.id)}>X</button>
             </h3>
             <hr/>

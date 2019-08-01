@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../Products.module.css'
+import styles from './TextInput.module.css'
 
 const Label = ({ error, className, children, ...props }) => (
     <label className={styles.label} {...props}>

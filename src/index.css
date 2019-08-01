@@ -13,6 +13,19 @@ code {
     monospace;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #f94c02;
+}
+
+button:disabled {
+    /* opacity: .5; */
+    cursor: not-allowed !important;
+}
+
 .Collapsible {
   background-color: #ebebeb;
 }

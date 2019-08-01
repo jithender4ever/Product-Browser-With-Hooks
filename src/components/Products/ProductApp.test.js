@@ -1,10 +1,10 @@
 import React from 'react'
 import 'jest-dom/extend-expect'
-import { render, cleanup, waitForElement, prettyDOM, getByText as domGetByText } from 'react-testing-library'
+import { render, cleanup, waitForElement, getByText as domGetByText } from 'react-testing-library'
 import mockAxios from 'axios'
-import ProductBrowser from './ProductBrowser'
+import ProductApp from './ProductApp'
 import formatPrice from './format-price.js'
-import styles from './Products.module.css'
+import styles from './ProductApp.module.css'
 
 const scheduler = typeof setImmedate === 'function' ? setImmediate : setTimeout
 function flushEventQueue(millis = 0) {
@@ -64,7 +64,7 @@ afterEach(cleanup)
 
 describe('Product Browser App', () => {
     it('displays the title', () => {
-        const { getByText } = render(<ProductBrowser />)
+        const { getByText } = render(<ProductApp />)
         const message = getByText(/Products/i)
         expect(message).toBeInTheDocument()
     })
@@ -72,11 +72,11 @@ describe('Product Browser App', () => {
         mockAxios.get.mockImplementationOnce(() => {
             return Promise.resolve({ data: [] })
         })
-        const { getByText } = render(<ProductBrowser />)
+        const { getByText } = render(<ProductApp />)
         await waitForElement(() => getByText('No data to display'))
     })
     it('renders 3 products with header, description, and price', async () => {
-        const { container, getByText } = render(<ProductBrowser />)
+        const { container, getByText } = render(<ProductApp />)
         await waitForElement(() => getByText('16 oz. Fiberglass Handle Hammer'))
         const productList = container.querySelector(`.${styles['product-list']}`)
         expect(productList.childElementCount).toEqual(3)

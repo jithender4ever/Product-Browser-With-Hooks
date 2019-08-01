@@ -1,63 +1,26 @@
 import React from 'react'
-import axios from 'axios'
 import Collapsible from 'react-collapsible'
-import toastr from '../../toastr'
-import 'toastr/build/toastr.min.css'
 import NewProductForm from './NewProductForm'
 import ProductList from './ProductList'
 
 class ProductBrowser extends React.Component {
-    apiUrl = 'http://localhost:4000/products'
-
-    state = {
-        products: [],
-    }
-
-    async addProduct(product) {
-        try {
-            const response = await axios.post(this.apiUrl, product)
-            this.setState({
-                products: [...this.state.products, response.data],
-            })
-            this.collapsible.closeCollapsible()
-            return response
-        } catch (error) {
-            toastr.error(error)
-        }
-    }
-
-    async removeProduct(id) {
-        try {
-            const response = await axios.delete(`${this.apiUrl}/${id}`)
-            this.setState({
-                products: this.state.products.filter(product => product.id !== id),
-            })
-            return response
-        } catch (error) {
-            toastr.error(error)
-        }
-    }
-
-    async componentDidMount() {
-        try {
-            const response = await axios.get(this.apiUrl)
-            this.setState({ products: response.data })
-        } catch (error) {
-            console.log(error)
-            toastr.error(error)
-        }
+    
+    addProductAndCloseForm(product) {
+        this.collapsible.closeCollapsible()
+        this.props.addProduct(product)
     }
 
     render() {
+        const { products, removeProduct } = this.props
         return (
             <section>
                 <h1>Products</h1>
                 <div style={{ maxWidth: '600px', textAlign: 'center', margin: '10px auto' }}>
                     <Collapsible ref={ref => (this.collapsible = ref)} trigger={'Add Item'}>
-                        <NewProductForm addProduct={this.addProduct.bind(this)} />
+                        <NewProductForm addProduct={this.addProductAndCloseForm.bind(this)} />
                     </Collapsible>
                 </div>
-                <ProductList products={this.state.products} removeProduct={this.removeProduct.bind(this)} />
+                <ProductList products={products} removeProduct={removeProduct} />
             </section>
         )
     }

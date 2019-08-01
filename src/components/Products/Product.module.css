@@ -1,0 +1,40 @@
+.product {
+    text-align: left;
+    border: 1px solid #f96302;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.product-title {
+    color: #f96302;
+    text-align: center;
+}
+
+.delete-button {
+    color: gray;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.product dl {
+    padding: 0.5em;
+}
+
+.product dt {
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: right;
+    font-weight: bold;
+    color: #f96302;
+}
+
+.product dt::after {
+    content: ":";
+}
+
+.product dd {
+    margin: 0 0 0 110px;
+    padding: 0 0 0.5em 0;
+}

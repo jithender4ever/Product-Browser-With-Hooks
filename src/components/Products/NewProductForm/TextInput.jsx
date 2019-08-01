@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import Label from './Label'
-import styles from '../Products.module.css'
+import styles from './TextInput.module.css'
 
 const InputFeedback = ({ error }) => error ? <div className={styles["input-feedback"]}>{error}</div> : null
 
