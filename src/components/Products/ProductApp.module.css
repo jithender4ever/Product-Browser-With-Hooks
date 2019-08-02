@@ -1,0 +1,64 @@
+.container {
+    min-height: 96vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(43, 49, 52);
+    color: white;
+}
+
+.logo-and-title {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.title {
+    margin-left: 20px;
+}
+
+footer {
+    /* border: 1px solid blue; */
+    /*   min-height: 30px; */
+}
+
+.middle {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NOTE: currently we do not have a left nav */
+nav {
+    order: -1;
+}
+nav ul {
+    list-style: none;
+    text-align: left;
+}
+  
+@media (min-width: 1280px) {
+    .middle {
+        flex-direction: row;
+        flex: 1;
+        align-content: space-around;
+        align-items: flex-start;
+        margin: 0 3rem;
+    }
+    main {
+        flex: 1;
+        text-align: center;
+        /* padding: 30px; */
+    }
+    nav, aside {
+        /* the last argument is the width of the columns */
+        flex: 0 0 800px;
+    }
+}

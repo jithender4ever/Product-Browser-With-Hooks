@@ -1,0 +1,27 @@
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.name-and-description {
+    display: flex;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.description {
+    text-align: left;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.center {
+    text-align: center;
+}

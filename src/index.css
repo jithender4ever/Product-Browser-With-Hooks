@@ -17,6 +17,10 @@ code {
     box-sizing: border-box;
 }
 
+h1 {
+    margin: 20px 0;
+}
+
 button:hover {
     background-color: #f94c02;
 }

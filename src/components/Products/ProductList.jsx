@@ -2,9 +2,9 @@ import React from 'react'
 import Product from './Product'
 import styles from './ProductList.module.css'
 
-const ProductList = ({products, removeProduct}) => {
+const ProductList = ({admin, products, removeProduct}) => {
     const productList = products.map(product => (
-        <Product key={product.id} product={product} remove={removeProduct} />
+        <Product key={product.id} admin={admin} product={product} remove={removeProduct} />
     ))
 
     const productListOrNoDataMessage = productList.length > 0 ? (
@@ -13,13 +13,7 @@ const ProductList = ({products, removeProduct}) => {
         </div>
     ) : <p>No data to display</p>
 
-    return (
-        <section>
-            <div>                
-                {productListOrNoDataMessage}
-            </div>
-        </section>
-    )
+    return productListOrNoDataMessage
 }
 
 export default ProductList
