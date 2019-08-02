@@ -16,17 +16,10 @@ header {
 
 .logo-and-title {
     display: flex;
-    justify-content: space-around;
-    
 }
 
 .title {
     margin-left: 20px;
-}
-
-footer {
-    /* border: 1px solid blue; */
-    /*   min-height: 30px; */
 }
 
 .middle {

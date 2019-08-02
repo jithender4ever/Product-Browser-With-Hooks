@@ -7,7 +7,7 @@ import gridStyles from './Grid.module.css'
 const centerAnd1of6 = classnames(gridStyles["grid-1of6"], styles.center);
 const nameAndDescription = classnames(gridStyles["grid-1of3"], styles["name-and-description"]);
 
-const CartItem = ({ item, remove }) => {
+const CartItem = ({ item, remove, updateItem }) => {
     const { name, description, price, quantity } = item
     const total = price * quantity
     return (
@@ -19,9 +19,17 @@ const CartItem = ({ item, remove }) => {
                 </div>
             </div>
             <div className={centerAnd1of6}>{formatPrice(price)}</div>
-            <div className={centerAnd1of6}>{quantity}</div>
             <div className={centerAnd1of6}>
-                <button className={styles['remove-button']} onClick={() => remove(item.id)}>Remove</button>
+                <input
+                    className={styles.quantity}
+                    type="number"
+                    value={quantity}
+                    min="1"
+                    onChange={e => updateItem({ ...item, quantity: Number(e.target.value) })}
+                />
+            </div>
+            <div className={centerAnd1of6}>
+                <button className="primary" onClick={() => remove(item.id)}>Remove</button>
             </div>
             <div className={centerAnd1of6}>{formatPrice(total)}</div>
         </li>

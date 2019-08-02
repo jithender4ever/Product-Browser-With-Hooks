@@ -66,7 +66,7 @@ const NewProductForm = props => {
                 />
                 <div className={styles.buttons}>
                     <button
-                        className={classnames(styles["form-button"], styles["secondary-button"])}
+                        className={classnames(styles["form-button"], "secondary")}
                         type="button"
                         onClick={handleReset}
                         disabled={!dirty || isSubmitting}
@@ -74,7 +74,7 @@ const NewProductForm = props => {
                         Reset
                     </button>
                     <button
-                        className={classnames(styles["form-button"], styles["primary-button"])}
+                        className={classnames(styles["form-button"], "primary")}
                         type="submit"
                         disabled={isSubmitting}>
                             Submit

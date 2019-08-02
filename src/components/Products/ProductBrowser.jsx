@@ -21,12 +21,12 @@ class CollapsibleForm extends React.Component {
     }
 }
 
-function ProductBrowser({ admin, products, addProduct, removeProduct }) {
+function ProductBrowser({ admin, products, addProduct, removeProduct, addToCart }) {
     return (
         <div>
             <h1>Browse Products</h1>
             {admin ? <CollapsibleForm addProduct={addProduct} /> : null}
-            <ProductList admin={admin} products={products} removeProduct={removeProduct} />
+            <ProductList admin={admin} products={products} removeProduct={removeProduct} addToCart={addToCart} />
         </div>
     )
 }

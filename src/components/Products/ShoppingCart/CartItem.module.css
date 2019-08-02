@@ -14,12 +14,20 @@
     font-weight: 700;
     font-size: 1rem;
     text-align: left;
+    color: #F96302;
 }
 
 .description {
     text-align: left;
     font-size: 0.8rem;
     margin-top: 4px;
+}
+
+.quantity {
+    width: 2rem;
+    border-width: 0;
+    font-size: 1rem;
+    outline: none;
 }
 
 .center {

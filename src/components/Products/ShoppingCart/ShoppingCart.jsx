@@ -5,25 +5,25 @@ import CartItem from './CartItem'
 import styles from './ShoppingCart.module.css'
 import gridStyles from './Grid.module.css'
 
-const shppingCartLabelClasses = classnames(gridStyles["grid-1of3"], styles["header"])
+const shoppingCartItemLabelClasses = classnames(gridStyles["grid-1of3"], styles["header"])
 const headerClasses = classnames(gridStyles["grid-1of6"], styles["header"])
 const labelClasses = styles["summary-label"]
 const summaryDataClasses = styles["summary-data"]
 
-function ShoppingCart({ items, remove }) {
+function ShoppingCart({ items, removeItem, updateItem }) {
     const cartItems = items.map(item => (
-        <CartItem key={item.id} item={item} remove={remove} />
+        <CartItem key={item.id} item={item} remove={removeItem} updateItem={updateItem} />
     ))
     const subTotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
-    const tax = subTotal * 0.07;
-    const shipping = 10.00
+    const tax = subTotal * 0.07
+    const shipping = items.length * 200
     const grandTotal = subTotal + tax + shipping
     return (
         <div className={styles.cart}>
             <h1 className={styles["title"]}>Shopping Cart</h1>
             <div className={styles["cart-body"]}>
                 <div className={styles["headers"]}>
-                    <div className={shppingCartLabelClasses}>Items</div>
+                    <div className={shoppingCartItemLabelClasses}>Items</div>
                     <div className={headerClasses}>Price</div>
                     <div className={headerClasses}>Quantity</div>
                     <div className={gridStyles["grid-1of6"]}></div>
