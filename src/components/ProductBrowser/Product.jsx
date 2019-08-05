@@ -1,13 +1,16 @@
 import React from 'react'
+import classnames from 'classnames'
+import formatPrice from '../../format-price'
 import styles from './Product.module.css'
-import formatPrice from './format-price.js'
+
+const deleteButtonStyle = classnames(styles['delete-button'], 'primary')
 
 const Product = ({ admin, product, remove, addToCart }) => {
     const {name, brand, price, description, rating} = product
     return (
         <div className={styles.product}>
             <h3 className={styles['product-title']}>{name}
-                {admin ? <button className={styles['delete-button']} onClick={() => remove(product.id)}>X</button> : null}
+                {admin ? <button className={deleteButtonStyle} onClick={() => remove(product.id)}>X</button> : null}
             </h3>
             <dl>
                 <dt>Brand</dt><dd>{brand}</dd>

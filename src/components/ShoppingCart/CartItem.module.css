@@ -8,13 +8,14 @@
 
 .name-and-description {
     display: flex;
+    flex: 0 0 33.333333%;
 }
 
 .name {
     font-weight: 700;
     font-size: 1rem;
     text-align: left;
-    color: #F96302;
+    /* color: #F96302; */
 }
 
 .description {
@@ -32,4 +33,5 @@
 
 .center {
     text-align: center;
+    flex: 0 0 16.666667%;
 }

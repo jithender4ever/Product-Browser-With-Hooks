@@ -1,33 +1,3 @@
-.container {
-    min-height: 96vh;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-}
-
-header {
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(43, 49, 52);
-    color: white;
-}
-
-.logo-and-title {
-    display: flex;
-}
-
-.title {
-    margin-left: 20px;
-}
-
-.middle {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-}
-
 /* NOTE: currently we do not have a left nav */
 nav {
     order: -1;
@@ -35,6 +5,12 @@ nav {
 nav ul {
     list-style: none;
     text-align: left;
+}
+
+.middle {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
   
 @media (min-width: 1280px) {
@@ -52,6 +28,14 @@ nav ul {
     }
     nav, aside {
         /* the last argument is the width of the columns */
-        flex: 0 0 800px;
+        flex: 0 0 600px;
     }
+}
+
+.container {
+    text-align: center;
+    min-height: 96vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }

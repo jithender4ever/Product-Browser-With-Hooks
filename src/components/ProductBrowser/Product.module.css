@@ -1,8 +1,6 @@
 .product {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    height: 420px;
     text-align: left;
     border: 1px solid #f96302;
     border-radius: 10px;
@@ -12,13 +10,13 @@
 }
 
 .product-title {
-    color: #f96302;
+    /* color: #f96302; */
     text-align: center;
     border-bottom: 1px solid lightgray;
+    padding-bottom: 1rem;
 }
 
 .delete-button {
-    color: gray;
     font-size: 0.8rem;
     margin-left: 10px;
 }

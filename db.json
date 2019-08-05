@@ -1,4 +1,7 @@
 {
+  "config": {
+    "admin": false
+  },
   "products": [
     {
       "id": 1,
@@ -55,17 +58,33 @@
       "description": "Undercut tongue and groove design won't slip. PermaLock fastener eliminates nut and bolt failure. Patented reinforcing edge minimizes stress breakage.",
       "price": 1598,
       "rating": 5
+    },
+    {
+      "id": 8,
+      "name": "5 in. Fastback Flip Pocket Knife",
+      "brand": "Milwaukee",
+      "description": "The Milwaukee FASTBACK Flip Pocket Knife quickly opens with the press of a button and flip of the wrist for quick cutting. The smooth blade easily cuts through material leaving a clean edge. It's also easy to sharpen.",
+      "price": 1497,
+      "rating": 4
+    },
+    {
+      "id": 9,
+      "name": "Quick Change Retractable Knife (2-Pack)",
+      "brand": "Stanley",
+      "description": "This Stanley Quick Change Retractable Knife 2-pack is ideal for the DIYer for most common cutting applications. The blade has an integrated string cutter even when blade is retracted.",
+      "price": 997,
+      "rating": 4
     }
   ],
   "cart": [
     {
-      "id": 2,
-      "name": "16 oz. Rubber Mallet",
+      "id": 1,
+      "name": "16 oz. Fiberglass Handle Hammer",
       "brand": "HDX",
-      "description": "Wood handle for durability. Black rubber head won't mar surfaces. Designed for durability, performance and value.",
-      "price": 547,
-      "rating": 4.5,
-      "quantity": 3
+      "description": "The 16 oz. Claw Hammer features Perm bond construction between its head and handle for strength. It has a comfort cushion Shock Reduction Grip Protect your eyes from flying particles and dust.",
+      "price": 697,
+      "rating": 4.8,
+      "quantity": 1
     },
     {
       "id": 3,
@@ -75,24 +94,6 @@
       "price": 2597,
       "rating": 5,
       "quantity": 2
-    },
-    {
-      "id": 4,
-      "name": "Husky Diamond Tip Magnetic Screwdriver Set (6-Piece)",
-      "brand": "Husky",
-      "description": "Set includes 3 slotted screwdrivers and 3 Philips screwdrivers Ergonomic dual material handle for comfort and control. Lifetime Warranty with no questions, no receipt required.",
-      "price": 1497,
-      "rating": 4.7,
-      "quantity": 1
-    },
-    {
-      "id": 5,
-      "name": "Heavy-Duty Multi-Bit Screwdriver/Nut Driver- Cushion Grip Handle",
-      "brand": "Klein Tools",
-      "description": "Includes 3/16 in. and 1/4 in. slotted bits. Heat-treated nut driver has comfortable cushion grip handles. Shop the Multibit Screwdrivers and Nut Drivers Collection.",
-      "price": 1498,
-      "rating": 4.6,
-      "quantity": 4
     }
   ]
 }

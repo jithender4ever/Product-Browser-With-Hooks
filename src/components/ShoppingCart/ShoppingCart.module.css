@@ -19,6 +19,7 @@
     font-weight: 700;
     font-size: 2rem;
     text-align: center;
+    color: #f96302;
 }
 
 .num-items {
@@ -27,9 +28,18 @@
     margin-top: 10px;
 }
 
+.item-header {
+    font-weight: 700;
+    text-align: center;
+    flex: 0 0 33.333333%;
+    color: #f96302;
+}
+
 .header {
     font-weight: 700;
     text-align: center;
+    flex: 0 0 16.666667%;
+    color: #f96302;
 }
 
 .items {
@@ -65,4 +75,8 @@
 .summary-data {
     text-align: center;
     margin-top: 0.75rem;
+}
+
+.grid-1of6 {
+    flex: 0 0 16.666667%;
 }

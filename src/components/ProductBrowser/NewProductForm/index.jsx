@@ -1,7 +1,7 @@
 import React from "react"
 import classnames from 'classnames'
 import formikEnhancer from './ValidationSchema'
-import TextInput from './TextInput'
+import TextInput from '../../TextInput/TextInput'
 import styles from './NewProductForm.module.css'
 
 const NewProductForm = props => {

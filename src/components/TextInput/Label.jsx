@@ -8,4 +8,3 @@ const Label = ({ error, className, children, ...props }) => (
 )
 
 export default Label
-  
