@@ -48,22 +48,9 @@ class App extends Component {
     async removeProduct(id) {
         try {
             const response = await axios.delete(`${productsUrl}/${id}`)
+            // filter out the product that was removed
             this.setState({
                 products: this.state.products.filter(product => product.id !== id)
-            })
-            return response
-        } catch (error) {
-            toastr.error(error)
-        }
-    }
-
-    async updateItemInCart(item) {
-        try {
-            const response = await axios.put(`${cartUrl}/${item.id}`, item)
-            const updatedProduct = response.data
-            // merge the resonse data into the local cart data
-            this.setState({
-                cart: this.state.cart.map(item => item.id === updatedProduct.id ? updatedProduct : item)
             })
             return response
         } catch (error) {
@@ -83,10 +70,24 @@ class App extends Component {
             else {
                 const response = await axios.post(cartUrl, { ...product, quantity: 1 })
                 this.setState({
-                    cart: [...this.state.cart, response.data],
+                    cart: [...this.state.cart, response.data]
                 })
                 return response
             }
+        } catch (error) {
+            toastr.error(error)
+        }
+    }
+
+    async updateItemInCart(item) {
+        try {
+            const response = await axios.put(`${cartUrl}/${item.id}`, item)
+            const updatedProduct = response.data
+            // merge the resonse data into the local cart data
+            this.setState({
+                cart: this.state.cart.map(item => item.id === updatedProduct.id ? updatedProduct : item)
+            })
+            return response
         } catch (error) {
             toastr.error(error)
         }
@@ -96,7 +97,7 @@ class App extends Component {
         try {
             const response = await axios.delete(`${cartUrl}/${id}`)
             this.setState({
-                cart: this.state.cart.filter(product => product.id !== id),
+                cart: this.state.cart.filter(product => product.id !== id)
             })
             return response
         } catch (error) {
