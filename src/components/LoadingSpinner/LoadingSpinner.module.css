@@ -1,0 +1,45 @@
+.container {
+    margin: 0 auto;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 30px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.loading {
+    background-color: rgb(249, 99, 2);
+    width: 4px;
+    height: 35px;
+    display: inline-block;
+    margin: 2px;
+    border-radius: 2px;
+    animation-fill-mode: both;
+}
+
+.loading1 {
+    animation: animation-6rlus4 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0.1s infinite normal both running;
+}
+.loading2 {
+    animation: animation-6rlus4 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0.2s infinite normal both running;
+}
+.loading3 {
+    animation: animation-6rlus4 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0.3s infinite normal both running;
+}
+.loading4 {
+    animation: animation-6rlus4 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0.4s infinite normal both running;
+}
+.loading5 {
+    animation: animation-6rlus4 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0.5s infinite normal both running;
+}
+
+@keyframes animation-6rlus4 {
+    0%   { transform: scaleY(1);   }
+    50%  { transform: scaleY(0.4); }
+    100% { transform: scaleY(1);   }
+}

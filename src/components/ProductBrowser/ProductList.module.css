@@ -6,3 +6,8 @@
     grid-column-gap: 10px;
     grid-row-gap: 15px;
 }
+
+.loading {
+    display: flex;
+    justify-content: center;
+}

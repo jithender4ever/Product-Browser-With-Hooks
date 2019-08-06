@@ -14,6 +14,7 @@ const cartUrl = `${apiUrl}/cart`
 
 class App extends Component {
     state = {
+        loading: false,
         config: undefined,
         products: [],
         cart: []
@@ -105,22 +106,27 @@ class App extends Component {
 
     async componentDidMount() {
         try {
+            this.setState({ loading: true })
             const configResponse = await axios.get(configUrl)
             const productsResponse = await axios.get(productsUrl)
             const cartResponse = await axios.get(cartUrl)
             this.setState({
+                loading: false,
                 config: configResponse.data,
                 products: productsResponse.data,
                 cart: cartResponse.data
             })
         } catch (error) {
+            this.setState({
+                loading: false
+            })
             console.log(error)
             toastr.error(error)
         }
     }
 
     render() {
-        const { config: { admin } = false, products, cart } = this.state
+        const { config: { admin } = false, loading, products, cart } = this.state
         return (
             <div className={styles.container}>
                 <header>
@@ -130,6 +136,7 @@ class App extends Component {
                     <main>
                         <ProductBrowser
                             admin={admin}
+                            loading={loading}
                             products={products}
                             addProduct={this.addProduct.bind(this)}
                             removeProduct={this.removeProduct.bind(this)}

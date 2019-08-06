@@ -41,8 +41,12 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "server": "yarn json-server -w -p 4000 db.json",
-        "server-big": "yarn json-server -w -p 4000 server.js",
-        "server-100": "yarn server-big -- -n 100",
+        "server-n": "yarn json-server -w -p 4000 server.js",
+        "server-20": "yarn server-n -- -n 20",
+        "server-100": "yarn server-n -- -n 100",
+        "server-500": "yarn server-n -- -n 500",
+        "server-1000": "yarn server-n -- -n 100",
+        "server-5000": "yarn server-n -- -n 5000",
         "deploy": "gh-pages -d build"
     }
 }
