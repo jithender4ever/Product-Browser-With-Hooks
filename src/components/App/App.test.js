@@ -1,13 +1,14 @@
 import React from 'react'
 import 'jest-dom/extend-expect'
-import { render, cleanup, waitForElement, getByText as domGetByText } from 'react-testing-library'
+import { render, cleanup, waitForElement, getByText as domGetByText, getByTestId as domGetByTestId, prettyDOM } from 'react-testing-library'
+import { Simulate } from 'react-dom/test-utils'
 import mockAxios from 'axios'
 import App from './App'
 import formatPrice from '../../format-price'
 import styles from './App.module.css'
 
 const scheduler = typeof setImmedate === 'function' ? setImmediate : setTimeout
-function flushEventQueue(millis = 0) {
+function flushPromises(millis = 0) {
     if (millis > 0) {
         return new Promise(res => setTimeout(res, millis) )
     }
@@ -16,7 +17,7 @@ function flushEventQueue(millis = 0) {
     }
 }
 
-const mockData = [
+const mockProducts = [
     {
         "id": 1,
         "name": "16 oz. Fiberglass Handle Hammer",
@@ -43,20 +44,68 @@ const mockData = [
     },
 ]
 
-beforeAll(() => {
-    mockAxios.get.mockImplementation(() => {
-        return Promise.resolve({ data: mockData })
+const mockCart = [
+    {
+        "id": 11,
+        "name": "Simple Drill",
+        "brand": "Dewalt",
+        "description": "Just a simple drill.",
+        "price": 999,
+        "rating": 3,
+        "quantity": 3
+    },
+    {
+        "id": 12,
+        "name": "Fancy Drill",
+        "brand": "Dewalt",
+        "description": "Just a fancy drill.",
+        "price": 1999,
+        "rating": 5,
+        "quantity": 1
+    }
+]
+
+beforeEach(() => {
+    mockAxios.get.mockImplementation(url => {
+        const path = new URL(url).pathname
+        // console.log(`path: ${path}`)
+        if (path === '/config') {
+            return Promise.resolve({ data: { admin: false } })
+        }
+        else if (path === '/products') {
+            return Promise.resolve({ data: mockProducts })
+        }
+        else if (path === '/cart') {
+            return Promise.resolve({ data: mockCart })
+        }
     })
     mockAxios.put.mockImplementation((url, data) => {
+        const path = new URL(url).pathname
+        // console.log(`PUT: path: ${path}, data: ${data}`)
         return Promise.resolve({ data })
     })
     mockAxios.post.mockImplementation((url, data) => {
-        return Promise.resolve({ data: { id: 100, ...data } })
+        const path = new URL(url).pathname
+        console.log(`POST: path: ${path}, data: ${JSON.stringify(data)}`)
+        if (path === '/products') {
+            return Promise.resolve({ data: { id: 100, ...data } })
+        }
+        else if (path === '/cart') {
+            return Promise.resolve({ data })
+        }
     })
     mockAxios.delete.mockImplementation((url, data) => {
+        const path = new URL(url).pathname
+        // console.log(`DELETE: path: ${path}, data: ${data}`)
         const id = url.slice(1)
-        const deletedProduct = mockData.find( t => t.id === Number(id))
-        return Promise.resolve({ data: deletedProduct })
+        if (path === '/products') {
+            const deletedProduct = mockProducts.find( t => t.id === Number(id))
+            return Promise.resolve({ data: deletedProduct })
+        }
+        else if (path === '/cart') {
+            const deletedItem = mockCart.find( t => t.id === Number(id))
+            return Promise.resolve({ data: deletedItem })
+        }
     })
 })
 
@@ -69,7 +118,7 @@ describe('Product Browser App', () => {
         expect(message).toBeInTheDocument()
     })
     it('renders a "No data to display" message when there are no products', async () => {
-        mockAxios.get.mockImplementationOnce(() => {
+        mockAxios.get.mockImplementation(() => {
             return Promise.resolve({ data: [] })
         })
         const { getByText } = render(<App />)
@@ -79,8 +128,8 @@ describe('Product Browser App', () => {
         const { container, getByText } = render(<App />)
         await waitForElement(() => getByText('16 oz. Fiberglass Handle Hammer'))
         const productList = container.querySelector(`.${styles['product-list']}`)
-        expect(productList.childElementCount).toEqual(3)
-        mockData.forEach(product => {
+        expect(productList.childElementCount).toEqual(mockProducts.length)
+        mockProducts.forEach(product => {
             const productElementHeader = getByText(product.name)
             const productElementCard = productElementHeader.parentNode
             // console.log('productElementCard:', prettyDOM(productElementCard))
@@ -89,5 +138,63 @@ describe('Product Browser App', () => {
             expect(domGetByText(productElementCard, product.rating + ' / 5')).toBeInTheDocument()
             expect(domGetByText(productElementCard, `${formatPrice(product.price)}`)).toBeInTheDocument()
         })
+    })
+    it('displays some cart items', async () => {
+        const { getByText, getByTestId } = render(<App />)
+        await waitForElement(() => getByText(mockCart[0].name))
+        const cartItems = getByTestId("cart-items")
+        expect(cartItems.childElementCount).toEqual(mockCart.length)
+        mockCart.forEach(item => {
+            const itemElement = domGetByTestId(cartItems, `item-${item.id}`)
+            // console.log('itemElement:', prettyDOM(itemElement))
+            expect(domGetByText(itemElement, item.name)).toBeInTheDocument()
+            expect(domGetByText(itemElement, item.description)).toBeInTheDocument()
+            const quantityFromDom = Number(domGetByTestId(itemElement, 'item-quantity').value)
+            expect(quantityFromDom).toBe(item.quantity)
+        })
+    })
+    it('can add a product to the shopping cart', async () => {
+        const { getByText, getByTestId } = render(<App />)
+        
+        // find the productToAdd and it's addToCart button and click it
+        const productToAdd = mockProducts[1]
+        const product = await waitForElement(() => getByText(productToAdd.name))
+        const addToCartButton = domGetByText(product.parentNode, 'Add to cart')
+        const numCartItems = getByTestId("cart-items").childElementCount
+        Simulate.click(addToCartButton)
+
+        // wait for promises to resolve
+        await flushPromises()
+
+        // verify that we have another item in our cart
+        const cartItems = getByTestId("cart-items")
+        expect(cartItems.childElementCount).toEqual(numCartItems + 1)
+        const addedItem = domGetByTestId(cartItems, `item-${productToAdd.id}`)
+        const quantityFromDom = Number(domGetByTestId(addedItem, 'item-quantity').value)
+        expect(quantityFromDom).toBe(1)
+        // console.log('addedItem:', prettyDOM(addedItem))
+    })
+    it('can remove a product from the shopping cart', async () => {
+        const { getByText, getByTestId, queryByTestId } = render(<App />)
+        await waitForElement(() => getByText(mockCart[0].name))
+        const cartItems = getByTestId("cart-items")
+        const itemToRemove = mockCart[0]
+
+        // find the itemToRemove and it's addToCart button and click it
+        const item = (await waitForElement(() => getByText(itemToRemove.name))).parentNode.parentNode.parentNode
+        // console.log('item:', prettyDOM(item))
+        const removeFromCartButton = domGetByText(item, 'Remove')
+        const numCartItems = cartItems.childElementCount
+        Simulate.click(removeFromCartButton)
+
+        // wait for promises to resolve
+        await flushPromises()
+
+        // verify that we have 1 less item in our cart
+        const updatedCartItems = getByTestId("cart-items")
+        expect(updatedCartItems.childElementCount).toEqual(numCartItems - 1)
+
+        // verify that itemToRemove was removed
+        expect(queryByTestId(`item-${itemToRemove.id}`)).toBeNull()
     })
 })

@@ -22,7 +22,7 @@ function ShoppingCart({ items, removeItem, updateItem }) {
                     <div className={styles["grid-1of6"]}></div>
                     <div className={styles["header"]}>Total</div>
                 </div>
-                <ul className={styles["items"]}>
+                <ul className={styles["items"]} data-testid="cart-items">
                     {cartItems}
                 </ul>
                 <div className={styles["summary"]}>

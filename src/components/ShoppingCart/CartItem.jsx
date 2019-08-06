@@ -6,7 +6,7 @@ const CartItem = ({ item, remove, updateItem }) => {
     const { name, description, price, quantity } = item
     const total = price * quantity
     return (
-        <li className={styles["cart-item"]}>
+        <li className={styles["cart-item"]} data-testid={`item-${item.id}`}>
             <div className={styles["name-and-description"]}>
                 <div>
                     <div className={styles.name}>{name}</div>
@@ -17,6 +17,7 @@ const CartItem = ({ item, remove, updateItem }) => {
             <div className={styles.center}>
                 <input
                     className={styles.quantity}
+                    data-testid="item-quantity"
                     type="number"
                     value={quantity}
                     min="1"
