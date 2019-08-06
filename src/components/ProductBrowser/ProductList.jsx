@@ -2,7 +2,7 @@ import React from 'react'
 import Product from './Product'
 import styles from './ProductList.module.css'
 
-const ProductList = ({admin, products, removeProduct, addToCart}) => {
+const ProductList = ({ admin, products, removeProduct, addToCart }) => {
     const productList = products.map(product => (
         <Product key={product.id} admin={admin} product={product} remove={removeProduct} addToCart={addToCart} />
     ))
