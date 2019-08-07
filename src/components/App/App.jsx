@@ -93,7 +93,7 @@ class App extends Component {
         }
     }
 
-    async removeProductFromCart(id) {
+    async removeItemFromCart(id) {
         try {
             const response = await axios.delete(`${cartUrl}/${id}`)
             this.setState({
@@ -147,7 +147,7 @@ class App extends Component {
                     <aside>
                         <ShoppingCart
                             items={cart}
-                            removeItem={this.removeProductFromCart.bind(this)}
+                            removeItem={this.removeItemFromCart.bind(this)}
                             updateItem={this.updateItemInCart.bind(this)}
                         />
                     </aside>
