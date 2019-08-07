@@ -68,7 +68,7 @@ const mockCart = [
 beforeEach(() => {
     mockAxios.get.mockImplementation(url => {
         const path = new URL(url).pathname
-        // console.log(`path: ${path}`)
+        // console.log(`GET: path: ${path}`)
         if (path === '/config') {
             return Promise.resolve({ data: { admin: false } })
         }
@@ -86,7 +86,7 @@ beforeEach(() => {
     })
     mockAxios.post.mockImplementation((url, data) => {
         const path = new URL(url).pathname
-        console.log(`POST: path: ${path}, data: ${JSON.stringify(data)}`)
+        // console.log(`POST: path: ${path}, data: ${JSON.stringify(data)}`)
         if (path === '/products') {
             return Promise.resolve({ data: { id: 100, ...data } })
         }
