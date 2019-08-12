@@ -69,8 +69,8 @@ beforeEach(() => {
     mockAxios.get.mockImplementation(url => {
         const path = new URL(url).pathname
         // console.log(`GET: path: ${path}`)
-        if (path === '/config') {
-            return Promise.resolve({ data: { admin: false } })
+        if (path === '/admin') {
+            return Promise.resolve({ data: { value: false } })
         }
         else if (path === '/products') {
             return Promise.resolve({ data: mockProducts })

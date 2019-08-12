@@ -1,6 +1,6 @@
 {
-  "config": {
-    "admin": false
+  "admin": {
+    "value": false
   },
   "products": [
     {

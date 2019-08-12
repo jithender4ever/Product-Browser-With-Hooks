@@ -6,8 +6,8 @@ module.exports = () => {
     const num = argv.n || 20
 
     const data = {
-        config: {
-            admin: false
+        admin: {
+            value: false
         },
         products: [],
         cart: []

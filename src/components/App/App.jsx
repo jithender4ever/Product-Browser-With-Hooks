@@ -8,24 +8,24 @@ import styles from './App.module.css'
 import 'toastr/build/toastr.min.css'
 
 const apiUrl = 'http://localhost:4000'
-const configUrl = `${apiUrl}/config`
+const adminUrl = `${apiUrl}/admin`
 const productsUrl = `${apiUrl}/products`
 const cartUrl = `${apiUrl}/cart`
 
 class App extends Component {
     state = {
         loading: false,
-        config: undefined,
+        admin: { value: false },
         products: [],
         cart: []
     }
 
     async toggleAdmin() {
-        const config = { ...this.state.config, admin: !this.state.config.admin }
+        const admin = { value: !this.state.admin.value }
         try {
-            const response = await axios.put(configUrl, config)
+            const response = await axios.put(adminUrl, admin)
             this.setState({
-                config: response.data
+                admin: response.data
             })
             return response
         } catch (error) {
@@ -108,12 +108,12 @@ class App extends Component {
     async componentDidMount() {
         try {
             this.setState({ loading: true })
-            const configResponse = await axios.get(configUrl)
+            const adminResponse = await axios.get(adminUrl)
             const productsResponse = await axios.get(productsUrl)
             const cartResponse = await axios.get(cartUrl)
             this.setState({
                 loading: false,
-                config: configResponse.data,
+                admin: adminResponse.data,
                 products: productsResponse.data,
                 cart: cartResponse.data
             })
@@ -127,16 +127,16 @@ class App extends Component {
     }
 
     render() {
-        const { config: { admin } = false, loading, products, cart } = this.state
+        const { admin, loading, products, cart } = this.state
         return (
             <div className={styles.container}>
                 <header>
-                    <Navbar admin={admin} toggleAdmin={this.toggleAdmin.bind(this)} />
+                    <Navbar admin={admin.value} toggleAdmin={this.toggleAdmin.bind(this)} />
                 </header>
                 <div className={styles.middle}>
                     <main>
                         <ProductBrowser
-                            admin={admin}
+                            admin={admin.value}
                             loading={loading}
                             products={products}
                             addProduct={this.addProduct.bind(this)}
