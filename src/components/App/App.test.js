@@ -1,6 +1,13 @@
 import React from 'react'
 import 'jest-dom/extend-expect'
-import { render, cleanup, waitForElement, getByText as domGetByText, getByTestId as domGetByTestId, prettyDOM } from 'react-testing-library'
+import {
+    render,
+    cleanup,
+    waitForElement,
+    getByText as domGetByText,
+    getByTestId as domGetByTestId,
+    prettyDOM
+} from 'react-testing-library'
 import { Simulate } from 'react-dom/test-utils'
 import mockAxios from 'axios'
 import App from './App'
@@ -65,48 +72,51 @@ const mockCart = [
     }
 ]
 
+function registerMockData(mockData) {
+    const methods = ['get', 'put', 'post', 'delete']
+    methods.forEach(method => {
+        mockAxios[method].mockImplementation((url, data) => {
+            const path = new URL(url).pathname
+            const response = mockData[method][path]
+            if (response) {
+                return typeof response === 'function' ? response(data) : response
+            }
+            else {
+                throw new Error(`never found data for response: ${method} ${path}`)
+            }
+        })
+    })
+}
+
+function getDefaultMockData() {
+    const mockData = {
+        get: {},
+        put: {},
+        post: {},
+        delete: {}
+    }
+    mockData.get['/admin'] = data => Promise.resolve({ data: { value: false } })
+    mockData.put['/admin'] = data => Promise.resolve({ data })
+
+    mockData.get['/products'] = data => Promise.resolve({ data: mockProducts })
+    mockData.post['/products'] = data => Promise.resolve({ data: { id: 100, ...data } })
+    mockData.delete['/products/2'] = data => Promise.resolve({ data: mockProducts.find( t => t.id === Number(id)) })
+    
+    mockData.get['/cart'] = data => Promise.resolve({ data: mockCart })
+    mockData.put['/cart'] = data => Promise.resolve({ data })
+    mockData.post['/cart'] = data => Promise.resolve({ data })
+    mockData.delete['/cart/11'] = data => Promise.resolve({ data: mockCart.find( t => t.id === 11) })
+    
+    return mockData
+}
+
+function printMockData(mockData) {
+    const str = Object.keys(mockData).map(method => `\t${method}: ${Object.keys(mockData[method]).join(' ')}`).join('\n')
+    console.log(`mockData:\n${str}`)
+}
+
 beforeEach(() => {
-    mockAxios.get.mockImplementation(url => {
-        const path = new URL(url).pathname
-        // console.log(`GET: path: ${path}`)
-        if (path === '/admin') {
-            return Promise.resolve({ data: { value: false } })
-        }
-        else if (path === '/products') {
-            return Promise.resolve({ data: mockProducts })
-        }
-        else if (path === '/cart') {
-            return Promise.resolve({ data: mockCart })
-        }
-    })
-    mockAxios.put.mockImplementation((url, data) => {
-        const path = new URL(url).pathname
-        // console.log(`PUT: path: ${path}, data: ${data}`)
-        return Promise.resolve({ data })
-    })
-    mockAxios.post.mockImplementation((url, data) => {
-        const path = new URL(url).pathname
-        // console.log(`POST: path: ${path}, data: ${JSON.stringify(data)}`)
-        if (path === '/products') {
-            return Promise.resolve({ data: { id: 100, ...data } })
-        }
-        else if (path === '/cart') {
-            return Promise.resolve({ data })
-        }
-    })
-    mockAxios.delete.mockImplementation((url, data) => {
-        const path = new URL(url).pathname
-        // console.log(`DELETE: path: ${path}, data: ${data}`)
-        const id = url.slice(1)
-        if (path === '/products') {
-            const deletedProduct = mockProducts.find( t => t.id === Number(id))
-            return Promise.resolve({ data: deletedProduct })
-        }
-        else if (path === '/cart') {
-            const deletedItem = mockCart.find( t => t.id === Number(id))
-            return Promise.resolve({ data: deletedItem })
-        }
-    })
+    registerMockData(getDefaultMockData())
 })
 
 afterEach(cleanup)
@@ -118,9 +128,10 @@ describe('Product Browser App', () => {
         expect(message).toBeInTheDocument()
     })
     it('renders a "No data to display" message when there are no products', async () => {
-        mockAxios.get.mockImplementation(() => {
-            return Promise.resolve({ data: [] })
-        })
+        const mockData = getDefaultMockData()
+        mockData.get['/products'] = data => Promise.resolve({ data: [] })
+        // printMockData(mockData);
+        registerMockData(mockData)
         const { getByText } = render(<App />)
         await waitForElement(() => getByText('No data to display'))
     })
@@ -181,7 +192,7 @@ describe('Product Browser App', () => {
         const itemToRemove = mockCart[0]
 
         // find the itemToRemove and it's addToCart button and click it
-        const item = (await waitForElement(() => getByText(itemToRemove.name))).parentNode.parentNode.parentNode
+        const item = (await waitForElement(() => getByText(itemToRemove.name))).closest('li')
         // console.log('item:', prettyDOM(item))
         const removeFromCartButton = domGetByText(item, 'Remove')
         const numCartItems = cartItems.childElementCount
