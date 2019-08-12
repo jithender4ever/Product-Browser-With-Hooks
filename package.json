@@ -41,7 +41,7 @@
         "test": "react-scripts test",
         "ci-test": "CI=true react-scripts test",
         "eject": "react-scripts eject",
-        "server": "yarn json-server -w -p 4000 db.json",
+        "server": "cp -f db.json.orig db.json && yarn json-server -w -p 4000 db.json",
         "server-n": "yarn json-server -w -p 4000 server.js",
         "server-10": "yarn server-n -- -n 10",
         "server-20": "yarn server-n -- -n 20",
