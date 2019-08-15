@@ -10,7 +10,7 @@ import {
 } from 'react-testing-library'
 import { Simulate } from 'react-dom/test-utils'
 import mockAxios from 'axios'
-import App from './App'
+import App from './AppNew'
 import formatPrice from '../../format-price'
 import styles from './App.module.css'
 
@@ -101,12 +101,12 @@ function getDefaultMockData() {
     mockData.get['/products'] = data => Promise.resolve({ data: mockProducts })
     mockData.post['/products'] = data => Promise.resolve({ data: { id: 100, ...data } })
     mockData.delete['/products/2'] = data => Promise.resolve({ data: mockProducts.find( t => t.id === Number(id)) })
-    
+
     mockData.get['/cart'] = data => Promise.resolve({ data: mockCart })
     mockData.put['/cart'] = data => Promise.resolve({ data })
     mockData.post['/cart'] = data => Promise.resolve({ data })
     mockData.delete['/cart/11'] = data => Promise.resolve({ data: mockCart.find( t => t.id === 11) })
-    
+
     return mockData
 }
 
@@ -166,7 +166,7 @@ describe('Product Browser App', () => {
     })
     it('can add a product to the shopping cart', async () => {
         const { getByText, getByTestId } = render(<App />)
-        
+
         // find the productToAdd and it's addToCart button and click it
         const productToAdd = mockProducts[1]
         const product = await waitForElement(() => getByText(productToAdd.name))
